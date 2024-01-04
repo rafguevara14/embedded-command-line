@@ -140,7 +140,7 @@ ISR(USART_RX_vect){
 
 int main()
 {
-    usart_init(eight_bit, SYNCH, ODD, one_bit, 9600_baud);
+    usart_init(eight_bit, SYNCH, ODD, one_bit, 19200_baud);
     sei();
 
     init(&buff);

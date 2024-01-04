@@ -6,7 +6,7 @@ CFLAGS=-std=c++14 -g -Wall -Os -mmcu=${MCU} -DF_CPU=${F_CPU}
 PORT=/dev/ttyACM0
 TARGET=main
 SRCS=./*.cpp 
-BAUD=9600
+BAUD=19200
 
 all: $(DEPS)
 	${CC} ${CFLAGS} -o ${TARGET}.bin $(SRCS) 
@@ -15,9 +15,11 @@ all: $(DEPS)
 flash:
 	avrdude -F -V -c arduino -p ATMEGA328P -P /dev/ttyACM${PORT_NUM} -b 115200 -U flash:w:${TARGET}.hex
 
-run: all flash clean
-
+debug:
 	screen ${PORT} ${BAUD}
+
+run: all flash clean debug
+
 
 test: 
 	g++ -g test_*.c circularbuffer.cpp -o test.o
