@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "circularbuffer.h": "c",
+        "new": "cpp"
+    },
+    "C_Cpp.intelliSenseEngineFallback": "disabled"
+}
