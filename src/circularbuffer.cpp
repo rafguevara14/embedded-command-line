@@ -44,6 +44,7 @@ lifo_iterator get_lifo_iterator(CircularBuffer* buff){
         .buff = buff,
         .i = buff->write_index-1, // start at the most recent write, work backwards
         .i_bounds = buff->write_index,
+        .first_pass = true,
     };
 }
 
@@ -55,12 +56,21 @@ int8_t peek_lifo_forward(lifo_iterator* itr, char* s){
         return -1;
     }
 
+    int initial_index = itr->i;
+
+    // immediately back away from the opposite bounds
+    if (itr->i == itr->i_bounds-1 && !itr->first_pass){
+        itr->i--;
+    }
+
+    itr->first_pass =false;
+
     strcpy(s, b->buffer[itr->i]);
 
     bool bounds = (itr->i == 0);
     itr->i = bounds ? itr->i : itr->i-1;
 
-    return !bounds;
+    return initial_index != itr->i;
 }
 
 int8_t peek_lifo_back(lifo_iterator* itr, char* s){
@@ -71,12 +81,17 @@ int8_t peek_lifo_back(lifo_iterator* itr, char* s){
         return -1;
     }
 
+    int initial_index = itr->i;
 
+    // immediately back away from the opposite bounds
+    if (itr->i == 0){
+        itr->i++;
+    }
 
     strcpy(s, itr->buff->buffer[itr->i]);
 
     bool bounds = (itr->i == (itr->i_bounds-1));
     itr->i = bounds ? itr->i : itr->i+1;
 
-    return !bounds;
+    return initial_index != itr->i;
 }

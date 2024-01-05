@@ -23,3 +23,5 @@ int update_state_bitmasks(StateMachine_t* sm, int16_t event);
 
 int update_state_value(StateMachine_t* sm, int16_t event);
 int update_sequencer(StateMachine_t* sm, int16_t event);
+
+void pass(int16_t event);

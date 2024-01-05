@@ -117,8 +117,11 @@ int main() {
 
 
     // test_circularbuffer();
-    test_peek();
+    // test_peek();
 
+    int x = 5;
+    x += 0 ? 1:0;
+    printf("%d\n", x);
 
 
 

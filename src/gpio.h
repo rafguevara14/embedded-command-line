@@ -11,15 +11,22 @@ typedef struct GPIO{
 
 constexpr int GPIOBaseAddr = 0x23;
 
-enum pin { zero, one, two, three, four, five, six, seven };
-enum port { B, C, D };
-enum direction { IN, OUT };
-enum resistor { FLOATING, PULLUP };
+#define VALID_PIN(x) 0 <= x && x <= 7
 
+enum ePin { zero, one, two, three, four, five, six, seven };
+enum ePort { B, C, D };
+enum eDirection { IN, OUT };
+enum eResistor { FLOATING, PULLUP };
 
-GPIO* get_register(port port);
+#define B_CODE 66
 
-void gpio_init(GPIO* gpio, pin n, direction dir, resistor r);
+GPIO* get_register_from_char(const char port);
+
+GPIO* get_register(ePort port);
+
+void gpio_init(GPIO* gpio, ePin n, eDirection dir, eResistor r);
+
+void set_direction(GPIO* gpio, eDirection dir, int n);
 
 // writing
 void toggle(GPIO* gpio, int n);

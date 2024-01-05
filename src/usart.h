@@ -47,3 +47,4 @@ void put(char c);
 void print(const char* c);
 void println(const char* c);
 void println();
+void printd(int d);
