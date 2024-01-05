@@ -1,5 +1,7 @@
 #include "usart.h"
 
+#include <stdio.h>
+
 
 
 void usart_init(size charsize, mode m, 
@@ -46,4 +48,10 @@ void println(const char* c) {
 
 void println() {	
     println(" ");
+}
+
+void printd(int d){
+    char buffer[5];
+    sprintf(buffer, "%d", d);
+    print(buffer);	
 }

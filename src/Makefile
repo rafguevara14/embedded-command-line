@@ -6,7 +6,7 @@ CFLAGS=-std=c++14 -g -Wall -Os -mmcu=${MCU} -DF_CPU=${F_CPU}
 PORT=/dev/ttyACM0
 TARGET=main
 SRCS=./*.cpp 
-BAUD=19200
+BAUD=9600
 
 all: $(DEPS)
 	${CC} ${CFLAGS} -o ${TARGET}.bin $(SRCS) 

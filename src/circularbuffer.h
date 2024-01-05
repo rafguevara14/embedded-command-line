@@ -15,6 +15,7 @@ typedef struct lifo_iterator{
     CircularBuffer* buff;
     int i;
     int i_bounds;
+    bool first_pass;
 }lifo_iterator;
 
 

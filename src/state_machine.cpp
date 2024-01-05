@@ -68,3 +68,7 @@ int update_sequencer(StateMachine_t* sm, int16_t event){
 	sm->state = sm->default_state;
 	return 0; // no state change
 }
+
+void pass(int16_t event){
+	// do nothing
+}
