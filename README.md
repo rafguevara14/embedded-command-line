@@ -22,4 +22,4 @@ Referencing the pins on the arduino uno is as simple as referring to the silkscr
 
 A few quality of life features expected in a Linux terminal are implemented here such as using the arrow keys to scroll up and down the command history and ctrl+backspace to delete the whole word
 
-![](https://github.com/rafguevara14/embedded-command-line/blob/add-timer-functionality/gifs/example.gif)
+![Example](https://github.com/rafguevara14/embedded-command-line/blob/add-timer-functionality/gifs/example.gif)
