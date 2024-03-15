@@ -19,13 +19,16 @@ static const GPIOCommand GPIO_CMD_MAP[] = {
     {"config-in", [](GPIO* g, int p){ set_direction(g, IN, p); }},
     {"config-out", [](GPIO* g, int p){ set_direction(g, OUT, p); }},
 
+
     {"watch-read", [](GPIO* g, int p){  
 
-        println();
+        gportwatch = g;
+        gpinwatch = p;
 
+        println();
         register_irq(isr_index::TIMER2_OVRFLW, [](){
             printd(read(gportwatch, gpinwatch));
-            print("\r");
+            println();
         });
 
         interrupt_configure(reinterpret_cast<Timer8*>(TIM2_BASE), TIM2_SK);
@@ -39,10 +42,6 @@ static const GPIOCommand GPIO_CMD_MAP[] = {
         });
 
         interrupt_configure(reinterpret_cast<Timer8*>(TIM2_BASE), TIM2_SK);
-    }},
-
-    {"stop", [](GPIO* g, int p){  
-        TIM2_SK->TOIE = 0;
     }},
 };
 
