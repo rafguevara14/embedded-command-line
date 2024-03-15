@@ -27,4 +27,4 @@ A few quality of life features expected in a Linux terminal are implemented here
 In the following demo, we have an arduino uno with D12 and D8 shorted together. We configure these pins accordingly and watch
 as the values are updated in real time. We also use the watch command to allow D8 to periodically toggle while we manually check the pin value on D12. The entire command line is run onboard the microcontroller and is accessed through the screen command. 
 
-![Example](https://github.com/rafguevara14/embedded-command-line/blob/add-timer-functionality/gifs/example.gif)
+![](https://github.com/rafguevara14/embedded-command-line/blob/main/gifs/example.gif)
