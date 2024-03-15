@@ -18,6 +18,6 @@ Referencing the pins on the arduino uno is as simple as referring to the silkscr
 | watch-toggle | toggle gpio pin at a set period        |
 | watch-read | read gpio pin at a set period        |
 
-## Features
+## Quality of life features
 
-A few quality of life features expected in a Linux terminal are implemented here such as using the arrow keys to scroll up and down the command history
+A few quality of life features expected in a Linux terminal are implemented here such as using the arrow keys to scroll up and down the command history and ctrl+backspace to delete the whole word
