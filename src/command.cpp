@@ -1,18 +1,50 @@
 #include "command.h"
 #include "arduino_uno.h"
+#include "isr.h"
+#include "timer.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
+
+static GPIO* gportwatch;
+static int gpinwatch;
+
 static const GPIOCommand GPIO_CMD_MAP[] = {
     {"toggle", toggle},
-    {"read", [](GPIO* g, int p){println();printd(read(g,p));}},
+    {"read", [](GPIO* g, int p){ println(); printd(read(g,p)); }},
     {"set", set},
     {"reset", reset},
-    {"config-in", [](GPIO* g, int p){set_direction(g,IN,p);}},
-    {"config-out", [](GPIO* g, int p){set_direction(g,OUT,p);}},
+    {"config-in", [](GPIO* g, int p){ set_direction(g, IN, p); }},
+    {"config-out", [](GPIO* g, int p){ set_direction(g, OUT, p); }},
+
+
+    {"watch-read", [](GPIO* g, int p){  
+
+        gportwatch = g;
+        gpinwatch = p;
+
+        println();
+        register_irq(isr_index::TIMER2_OVRFLW, [](){
+            printd(read(gportwatch, gpinwatch));
+            println();
+        });
+
+        interrupt_configure(reinterpret_cast<Timer8*>(TIM2_BASE), TIM2_SK);
+    }},
+
+    {"watch-toggle", [](GPIO* g, int p){  
+        gportwatch = g;
+        gpinwatch = p;
+        register_irq(isr_index::TIMER2_OVRFLW, [](){
+            toggle(gportwatch, gpinwatch);
+        });
+
+        interrupt_configure(reinterpret_cast<Timer8*>(TIM2_BASE), TIM2_SK);
+    }},
 };
+
 
 // modify the command argument to include the command and arguments
 int parse_command(char* command, char *tokens[])

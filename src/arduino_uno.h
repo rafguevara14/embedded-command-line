@@ -1,3 +1,4 @@
+#pragma once
 #include "gpio.h"
 
 // https://friedchips.io/en/Arduino,+ATMega328+port+manipulation+pin+port+mapping.html

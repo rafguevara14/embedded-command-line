@@ -5,7 +5,8 @@ enum{
     BACKSPACE=127,
     BLANKSPACE=32,
     ESCAPE_KEY=27,
-    CTRL_BACKSPACE=23
+    CTRL_BACKSPACE=23,
+    CTRL_C=3
 };
 
 void init_terminal();
