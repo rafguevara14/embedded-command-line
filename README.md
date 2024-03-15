@@ -15,6 +15,8 @@ Referencing the pins on the arduino uno is as simple as referring to the silkscr
 | toggle | toggle gpio pin        |
 | set | set gpio pin        |
 | reset | reset gpio pin        |
+| watch-toggle | toggle gpio pin at a set period        |
+| watch-read | read gpio pin at a set period        |
 
 ## Features
 
