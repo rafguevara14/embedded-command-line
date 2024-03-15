@@ -9,6 +9,7 @@
 #include "usart.h"
 #include "gpio.h"
 #include "command.h"
+#include "timer.h"
 
 #define MAX_COMMAND_LENGTH 16
 #define MAX_TOKENS 16
@@ -102,7 +103,14 @@ ISR(USART_RX_vect){
 
         return;
     }
-
+    
+    // stop any ongoing watch timers
+    if (data == CTRL_C) {
+        TIM2_SK->TOIE = 0;
+        reset_terminal_line(rx_buffer);
+        return;
+    }
+    
     switch (data) {
     
     // process user input
