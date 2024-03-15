@@ -22,4 +22,9 @@ Referencing the pins on the arduino uno is as simple as referring to the silkscr
 
 A few quality of life features expected in a Linux terminal are implemented here such as using the arrow keys to scroll up and down the command history and ctrl+backspace to delete the whole word
 
+## Demo
+
+In the following demo, we have an arduino uno with D12 and D8 shorted together. We configure these pins accordingly and watch
+as the values are updated in real time. We also use the watch command to allow D8 to periodically toggle while we manually check the pin value on D12. The entire command line is run onboard the microcontroller and is accessed through the screen command. 
+
 ![Example](https://github.com/rafguevara14/embedded-command-line/blob/add-timer-functionality/gifs/example.gif)
