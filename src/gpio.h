@@ -11,7 +11,7 @@ typedef struct GPIO{
 
 constexpr int GPIOBaseAddr = 0x23;
 
-#define VALID_PIN(x) 0 <= x && x <= 7
+#define VALID_PIN(x) (0 <= x && x <= 7)
 
 enum ePin { zero, one, two, three, four, five, six, seven };
 enum ePort { B, C, D };

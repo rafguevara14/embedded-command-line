@@ -7,6 +7,7 @@ PORT=/dev/ttyACM0
 TARGET=main
 SRCS=./*.cpp 
 BAUD=9600
+PORT_NUM=0
 
 all: $(DEPS)
 	${CC} ${CFLAGS} -o ${TARGET}.bin $(SRCS) 

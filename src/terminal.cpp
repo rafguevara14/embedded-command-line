@@ -48,7 +48,6 @@ const static StateTransition_t down_sequence[] = {
     {1, 43, pass, 2},
     {2, -1, go_down , 0},
 };
-
 static int num_terminal_characters = 0;
 
 void init_terminal(){
@@ -193,11 +192,7 @@ void run_terminal(){
 
             if (!command_info(rx_buffer, tokens, &token_count)) continue;
 
-            if (strcmp(tokens[0], "watch") == 0){
-                parse_gpio_commands(&tokens[1]);
-            }
-
-            parse_gpio_commands(&tokens[0]);
+                    parse_gpio_commands(&tokens[0]);
 
             reset_terminal_line(cmd);
 
