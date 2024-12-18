@@ -8,37 +8,33 @@
 #include <string.h>
 
 
-static GPIO* gportwatch;
-static int gpinwatch;
+// to avoid lambda trickiness and capture list scopes
+static GPIO* gpio_port;
+static int gpio_pin;
+
 
 static const GPIOCommand GPIO_CMD_MAP[] = {
-    {"toggle", toggle},
-    {"read", [](GPIO* g, int p){ println(); printd(read(g,p)); }},
-    {"set", set},
-    {"reset", reset},
-    {"config-in", [](GPIO* g, int p){ set_direction(g, IN, p); }},
-    {"config-out", [](GPIO* g, int p){ set_direction(g, OUT, p); }},
-
-
-    {"watch-read", [](GPIO* g, int p){  
-
-        gportwatch = g;
-        gpinwatch = p;
-
+    {"toggle",     [](){ toggle(gpio_port, gpio_pin); }},
+    {"read",       [](){ println(); printd(read(gpio_port, gpio_pin)); }},
+    {"set",        [](){ set(gpio_port, gpio_pin); } },
+    {"reset",      [](){ reset(gpio_port, gpio_pin); } },
+    {"config-in",  [](){ set_direction(gpio_port, IN, gpio_pin); }},
+    {"config-out", [](){ set_direction(gpio_port, OUT, gpio_pin); }},
+    {"watch-read", [](){  
         println();
         register_irq(isr_index::TIMER2_OVRFLW, [](){
-            printd(read(gportwatch, gpinwatch));
+            printd(read(gpio_port, gpio_pin));
             println();
         });
 
         interrupt_configure(reinterpret_cast<Timer8*>(TIM2_BASE), TIM2_SK);
+
     }},
 
-    {"watch-toggle", [](GPIO* g, int p){  
-        gportwatch = g;
-        gpinwatch = p;
+    {"watch-toggle", [](){  
+
         register_irq(isr_index::TIMER2_OVRFLW, [](){
-            toggle(gportwatch, gpinwatch);
+            toggle(gpio_port, gpio_pin);
         });
 
         interrupt_configure(reinterpret_cast<Timer8*>(TIM2_BASE), TIM2_SK);
@@ -87,7 +83,9 @@ const GPIOCommand* parse_gpio_commands(char** tokens){
             auto gpio = get_register(pinmap.port);
 
             if (VALID_PIN(pinmap.pin)){
-                row->action(gpio, pinmap.pin); 
+                gpio_port = gpio;
+                gpio_pin = pinmap.pin;
+                row->action(); 
             }
 
             return row;
