@@ -106,9 +106,11 @@ ISR(USART_RX_vect){
         return;
     }
     
-    // stop any ongoing watch timers
+    // stop any ongoing processes
     if (data == CTRL_C) {
         TIM2_SK->TOIE = 0;
+        // TODO: may want to disable adc entirely...
+        adc_interrupt_enable(0);
         reset_terminal_line(rx_buffer);
         return;
     }
