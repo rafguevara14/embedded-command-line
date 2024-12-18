@@ -71,7 +71,7 @@ void reset_terminal_line(char cmd[]){
     user_enter = false;
 
     // store only if different from previous command
-    if (strcmp(cmd, history.buffer[history.write_index-1]) != 0){
+    if (strcmp(cmd, history.buffer[history.write_index-1]) != 0 && cmd[0] != '\0'){
         write(&history, cmd);
     }
 
@@ -120,6 +120,9 @@ ISR(USART_RX_vect){
         
         if(rx_buffer[0] != '\0'){
             user_enter = true;
+        }
+        else{
+            reset_terminal_line(rx_buffer);
         }
 
         break;
