@@ -26,6 +26,10 @@ ISR(TIMER2_OVF_vect) {
 	isr_handlers[isr_index::TIMER2_OVRFLW]();
 }
 
+ISR(ADC_vect) { 
+	isr_handlers[isr_index::ADC_CONVERSION_CMPLT]();
+}
+
 // ISR(USART_RX_vect){
 // 	isr_handlers[isr_index::USART_RX](); 
 // }
