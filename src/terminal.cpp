@@ -8,6 +8,7 @@
 #include "state_machine.h"
 #include "usart.h"
 #include "gpio.h"
+#include "adc.h"
 #include "command.h"
 #include "timer.h"
 
@@ -55,6 +56,7 @@ void init_terminal(){
     init(&history);
 
     usart_init(eight_bit, SYNCH, ODD, one_bit, 9600_baud);
+    adc_init(voltage_ref::VCC, adc_channel::ADC0, 0, adc_prescaler::FACTOR_32);
     sei();
 
     print(">> ");
@@ -69,7 +71,7 @@ void reset_terminal_line(char cmd[]){
     user_enter = false;
 
     // store only if different from previous command
-    if (strcmp(cmd, history.buffer[history.write_index-1]) != 0){
+    if (strcmp(cmd, history.buffer[history.write_index-1]) != 0 && cmd[0] != '\0'){
         write(&history, cmd);
     }
 
@@ -104,9 +106,11 @@ ISR(USART_RX_vect){
         return;
     }
     
-    // stop any ongoing watch timers
+    // stop any ongoing processes
     if (data == CTRL_C) {
         TIM2_SK->TOIE = 0;
+        // TODO: may want to disable adc entirely...
+        adc_interrupt_enable(0);
         reset_terminal_line(rx_buffer);
         return;
     }
@@ -118,6 +122,9 @@ ISR(USART_RX_vect){
         
         if(rx_buffer[0] != '\0'){
             user_enter = true;
+        }
+        else{
+            reset_terminal_line(rx_buffer);
         }
 
         break;
