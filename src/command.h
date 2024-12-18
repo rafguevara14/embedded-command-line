@@ -3,7 +3,7 @@
 #include "gpio.h"
 #include "usart.h"
 
-typedef void (*gpio_action)(GPIO*, int);
+typedef void (*gpio_action)();
 
 typedef struct {
     const char* command;

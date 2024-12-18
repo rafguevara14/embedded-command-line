@@ -2,6 +2,7 @@
 #include "arduino_uno.h"
 #include "isr.h"
 #include "timer.h"
+#include "adc.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,6 +40,25 @@ static const GPIOCommand GPIO_CMD_MAP[] = {
 
         interrupt_configure(reinterpret_cast<Timer8*>(TIM2_BASE), TIM2_SK);
     }},
+
+    {"adc-read", [](){ 
+        adc_set_channel(static_cast<adc_channel>(gpio_pin));
+        println();
+        printud(adc_get_data());
+     }},
+
+    {"adc-watch", [](){ 
+
+        adc_set_channel(static_cast<adc_channel>(gpio_pin));
+
+        register_irq(isr_index::ADC_CONVERSION_CMPLT, [](){
+            println();
+            printud(adc_get_data());
+        });
+
+        adc_interrupt_enable(1);
+     }},
+
 };
 
 
