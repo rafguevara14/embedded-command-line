@@ -55,3 +55,9 @@ void printd(int d){
     sprintf(buffer, "%d", d);
     print(buffer);	
 }
+
+void printud(uint16_t d){
+    char buffer[8];
+    sprintf(buffer, "%d", d);
+    print(buffer);	
+}

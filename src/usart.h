@@ -47,3 +47,4 @@ void print(const char* c);
 void println(const char* c);
 void println();
 void printd(int d);
+void printud(uint16_t d);
