@@ -8,6 +8,7 @@
 #include "state_machine.h"
 #include "usart.h"
 #include "gpio.h"
+#include "adc.h"
 #include "command.h"
 #include "timer.h"
 
@@ -55,6 +56,7 @@ void init_terminal(){
     init(&history);
 
     usart_init(eight_bit, SYNCH, ODD, one_bit, 9600_baud);
+    adc_init(voltage_ref::VCC, adc_channel::ADC0, 0, adc_prescaler::FACTOR_32);
     sei();
 
     print(">> ");
